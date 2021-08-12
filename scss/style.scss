@@ -1,0 +1,331 @@
+$fontSpecial: "Arial Thin", sans-serif;
+$strongFontWeight: 600;
+$text: rgb(39, 39, 39);
+$link: #5357a6;
+$linkHover: #841e1e;
+$bgColorMain: #f8f8f8;
+
+@mixin srOnly {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+
+@mixin marginCentre {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin button {
+  color: $text;
+  background-color: $bgColorMain;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $text;
+  border-radius: 0.5rem;
+}
+
+@mixin buttonHover {
+  background-color: white;
+  border-color: #ccc;
+  color: #ccc;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+html {
+  overflow-y: scroll;
+  margin-bottom: 0;
+  font-size: 100%;
+}
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1rem;
+  margin: 0;
+  background-color: $bgColorMain;
+  padding: 2rem;
+  line-height: 1.5;
+  color: $text;
+
+  @media screen and (min-width: 960px) {
+    font-size: 1.25rem;
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: $strongFontWeight;
+  font-family: $fontSpecial;
+}
+
+h1 {
+  font-size: 2rem;
+  padding: 1rem 0 0 0;
+  text-align: center;
+
+  @media screen and (min-width: 960px) {
+    font-size: 3rem;
+    padding: 2rem 0 0 0;
+  }
+}
+
+h2 {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 1.5rem;
+
+  @media screen and (min-width: 960px) {
+    font-size: 1.9rem;
+    padding-top: 2rem;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+p {
+  max-width: 60ch;
+
+  @media screen and (min-width: 960px) {
+    max-width: 80ch;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $link;
+
+  &:hover {
+    color: $linkHover;
+  }
+}
+
+picture {
+  display: block;
+}
+
+.container {
+  max-width: 64rem;
+  @include marginCentre;
+}
+
+/** Slide images **/
+.card {
+  &s-reset {
+    position: absolute;
+
+    right: 10px;
+    bottom: 10px;
+
+    @media screen and (min-width: 960px) {
+      right: 30px;
+      bottom: 30px;
+    }
+
+    z-index: 20;
+
+    font-size: 90%;
+    padding: 0.5rem;
+
+    @include button;
+
+    cursor: pointer;
+
+    transition: 0.6s ease;
+
+    &:hover {
+      @include buttonHover;
+    }
+  }
+}
+
+/** Slideshow **/
+
+.slides {
+  display: none;
+
+  &.hide {
+    display: none;
+  }
+
+  &.show {
+    display: block;
+  }
+
+  &-container {
+    position: relative;
+    margin: 0 auto 10rem auto;
+    border: 2px solid $text;
+  }
+
+  &-info {
+    color: $text;
+    background-color: $bgColorMain;
+    font-size: 90%;
+    font-family: $fontSpecial;
+    padding: 0 0.625rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    @media screen and (min-width: 960px) {
+      top: 30px;
+      right: 30px;
+      padding: 0.5rem 0.75rem;
+    }
+
+    z-index: 30;
+    border: 1px solid $text;
+  }
+
+  &-caption {
+    position: absolute;
+    width: 100%;
+    p {
+      font-family: $fontSpecial;
+      font-size: 90%;
+      padding: 1em 0 0 1em;
+      text-align: center;
+      @supports (width: fit-content) {
+        @include marginCentre;
+        width: fit-content;
+        text-align: left;
+        padding: 1em 0 0 0;
+      }
+    }
+
+    a {
+      font-weight: $strongFontWeight;
+    }
+  }
+
+  &-prev,
+  &-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 1rem;
+    margin-top: -1.375rem;
+
+    font-weight: bold;
+    font-size: 0.6875rem;
+    transition: 0.6s ease;
+    user-select: none;
+    @include button;
+
+    @media screen and (min-width: 960px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  &-prev:hover,
+  &-next:hover {
+    @include buttonHover;
+  }
+
+  &-prev {
+    left: -1.5rem;
+  }
+
+  &-next {
+    right: -1.5rem;
+  }
+
+  &-button-disabled,
+  &-button-disabled:hover {
+    display: none;
+  }
+
+  &-fade {
+    -webkit-animation-name: slides-fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: slides-fade;
+    animation-duration: 1.5s;
+  }
+}
+
+@-webkit-keyframes slides-fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slides-fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.quote {
+  position: relative;
+  padding-bottom: 3rem;
+
+  font-size: 110%;
+  &::before {
+    content: "“";
+    font-size: 4rem;
+  }
+  &::after {
+    content: "”";
+    font-size: 4rem;
+    position: absolute;
+    right: 0;
+  }
+
+  p {
+    margin: -2rem auto 0 auto;
+    padding-left: 2rem;
+  }
+
+  &-source {
+    display: block;
+    margin-left: 4.5rem;
+    margin-bottom: 10rem;
+  }
+}
+
+.footer {
+  border-top: 2px solid $text;
+  margin-top: 2rem;
+  padding-top: 2rem;
+
+  h2 {
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 90%;
+    padding-top: 0;
+  }
+
+  li {
+    margin-bottom: 1rem;
+  }
+
+  .word-break {
+    word-break: break-all;
+  }
+}
