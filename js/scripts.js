@@ -1,47 +1,21 @@
 /**
-  Flashcards - flip the cards
- */
-
-document.addEventListener("click", e => {
-  if (!e.target.matches(".card-toggle")) return
-
-  e.preventDefault()
-
-  const cardBox = e.target.closest("[data-flashcards-wrapper]")
-
-  const cardDescription = cardBox.querySelector(".card-description")
-  cardDescription.classList.toggle("show")
-
-  const cardImage = cardBox.querySelector(".card-image")
-  cardImage.classList.toggle("hide")
-})
-
-/**
  * 
- Reset flashcards - return them all to non-flipped state
+ Reset slides (return to first slide)
 
  */
 const cardsReset = document.querySelector(".cards-reset")
-const allTextCards = document.querySelectorAll(".card-description")
-const allImageCards = document.querySelectorAll(".card-image")
+const imageCards = document.querySelectorAll(".card-image")
 
 const slides = document.querySelectorAll(".slides")
 
 function resetCards() {
-  for (let i = 0; i < allTextCards.length; i++) {
-    if (allTextCards[i].classList.contains("show")) {
-      allTextCards[i].classList.remove("show")
-    }
-  }
-
-  for (let i = 0; i < allImageCards.length; i++) {
-    if (allImageCards[i].classList.contains("hide")) {
-      allImageCards[i].classList.remove("hide")
+  for (let i = 0; i < imageCards.length; i++) {
+    if (imageCards[i].classList.contains("hide")) {
+      imageCards[i].classList.remove("hide")
     }
   }
 }
 
-// cardsReset.addEventListener("click", resetCards)
 cardsReset.addEventListener("click", () => {
   resetCards()
   currentSlide(1)
